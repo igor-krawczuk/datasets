@@ -22,6 +22,7 @@ from tempfile import mktemp
 def download_and_unpack(URL):
     fname = os.path.basename(URL)
     with FileLock("/tmp/flowers_download"):
+        print(f"Downloading into {os.path.abspath(os.curdir)}")
         if not os.path.exists(fname):
                 sp.call(["wget", URL])
         if not os.path.exists("flower_photos"):
@@ -30,7 +31,7 @@ def download_and_unpack(URL):
 
 class TFFlowers(Dataset):
     def __init__(
-            self, data_dir=os.path.abspath("~/.datasets/tfflowers"), img_size=(240, 240)
+            self, data_dir=os.path.expanduser("~/.datasets/tfflowers"), img_size=(240, 240)
     ):
         super().__init__()
         data_dir = os.path.abspath(data_dir)
